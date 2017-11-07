@@ -1,45 +1,17 @@
 <?php 
- // Get Needed DB info & redirect if already logged in
 	require_once("functions.php");
 	require_once("db_const.php");
 	session_start();
-	if (logged_in() == true) {
-		redirect_to("home.php");
-	}
-//set Variables
-if (isset($_POST['submit'])) {
-	$pass = $_POST['password'];
-	$email = $_POST['email'];
- 
-// Remember Me Cookies
-if (isset($_POST['remember'])) {	
-		session_set_cookie_params('604800'); //one week (value in seconds)
-		session_regenerate_id(true);
-	} 
-//Get user info from database and authenticate (PDO Protected)
-$user = DB::run("SELECT * FROM users WHERE email = ?", [$email])->fetch();
-if ($user && password_verify($pass, $user['pwd'])) {
-    $_SESSION['uid'] = $user['uid'];
-    $_SESSION['email'] = $user['email'];
-    $_SESSION['loggedIn'] = 'yes';
-
-    header('Location: home.php');
-    exit;
-} else {
-//If user&pass is incorrect, refresh with URL param AuthError to be handled later
-   $Message = urlencode("AuthError");
-		redirect_to("login.php?Message=".$Message);
-}	
-	}
-?><!DOCTYPE html>
+	?>
 <!--Design Based on W3layouts
 Adapted by Adin Biederman, 2017
 License: Creative Commons Attribution 3.0 Unported
 License URL: http://creativecommons.org/licenses/by/3.0/
 -->
+<!DOCTYPE html>
 <html lang="en">
 <head>
-<title>Member Login</title>
+<title>Resources</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta charset="utf-8">
 <meta name="keywords" content="Agrico Farm Responsive web template, Bootstrap Web Templates, Flat Web Templates, Android Compatible web template, 
@@ -126,7 +98,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 				</div>
 				<!-- agileits-top-heading -->
 				<div class="agileits-top-heading">
-					<h2>Member Login</h2>
+					<h2>Resources</h2>
 				</div>
 				<!-- //agileits-top-heading -->
 			</div>
@@ -136,33 +108,28 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 	<!-- about -->
 	<!-- main-textgrids -->
 	<div class="main-textgrids">
-		<div class="container">
-			</div> <center>
-			<!-- The HTML login form -->
-	<form action="<?=$_SERVER['PHP_SELF']?>" method="post">
-		<h8 style="padding-top: 20px; padding-right: 15px; padding-bottom: 20px; padding-left: 15px">Email: </h8><input type="text" name="email" /><br />
-		Password: <input type="password" name="password" /><br />
-		Remember me: <input type="checkbox" name="remember" /><br />
- 
-		<input type="submit" name="submit" value="Login" />
-		
-	</form>
-	<br>
-	<a href="register.php">Register</a>	<br> <br><font color="red">
-<?
-//Check URL param for string, and present corresponding banner in response
-if(isset($_GET["Message"])) {
-  if($_GET["Message"] == 'RegConfirm') {
-    echo "<div class=\"alert alert-success\" role=\"alert\"><strong>Registration Successful!</strong> You can now sign in using your inputted credentials. </div>";
-  } else if ($_GET["Message"] == 'AuthError') {
-    echo "<div class=\"alert alert-danger\" role=\"alert\"><strong>Incorrect email/password combo!</strong> For account help, please email carollc@comcast.net</div>"; 
-  } 
-}
-?>
-
-</center> </font>
+		<div id="page" class="container">
+	<?php
+    if( isset($_SESSION["loggedIn"] ) == "yes") { //You have to set that somewhere else just like $logged
+    ?>
+	<center><div class="column1"><div class="title">
+					<span class="byline">Below are a list of public and utility resources for homeowners.</span>
+			<h3>Public Services</h3>
+			<li><a href="http://www.beavertonoregon.gov/">City of Beaverton</a></li>
+			<li><a href="http://www.beavertonoregon.gov/562/Dispute-Resolution">Beaverton - Dispute Resolution Program</a></li>
+			<li><a href="http://www.co.washington.or.us/">Washington County</a></li>
+			<li><a href="http://www.co.washington.or.us/hhs/AnimalServices/">Washington County Animal Control</a></li>
+			<li><a href="http://trimet.org/">Trimet</a></li>
+			<li><a href="http://www.tvfr.com/">Fire Department</a></li>
+			<li><a href="http://beavertonpolice.org/">Police</a></li>
 		</div>
+			     </center>
 		</div>
+		<?php } else { ?>
+       <center> <p> We're sorry, you must be logged in to view this page. <br><a href="login.php">Login</a> </p> </center> <br>
+    <?php
+    }
+?> </div>
 	<!-- //main-textgrids -->
 	<!-- footer -->
 	<footer>

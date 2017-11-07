@@ -6,40 +6,94 @@
 	if (logged_in() == true) {
 		redirect_to("home.php");
 	}
-//set Variables
 if (isset($_POST['submit'])) {
-	$pass = $_POST['password'];
-	$email = $_POST['email'];
+#Get data ready for insertion
+$options = [
+    'cost' => 12,
+];
+	$rawpwd	= $_POST['password'];
+	$pwd = password_hash($rawpwd, PASSWORD_BCRYPT, $options);
+	$first_name	= $_POST['first_name'];
+	$last_name	= $_POST['last_name'];
+	$house_number = $_POST['house_number'];
+	$phone = $_POST['phone'];
+	$email		= $_POST['email'];
+	$invitecode = $_POST['invitecode'];
  
-// Remember Me Cookies
-if (isset($_POST['remember'])) {	
-		session_set_cookie_params('604800'); //one week (value in seconds)
-		session_regenerate_id(true);
-	} 
-//Get user info from database and authenticate (PDO Protected)
-$user = DB::run("SELECT * FROM users WHERE email = ?", [$email])->fetch();
-if ($user && password_verify($pass, $user['pwd'])) {
-    $_SESSION['uid'] = $user['uid'];
-    $_SESSION['email'] = $user['email'];
-    $_SESSION['loggedIn'] = 'yes';
-
-    header('Location: home.php');
-    exit;
-} else {
-//If user&pass is incorrect, refresh with URL param AuthError to be handled later
-   $Message = urlencode("AuthError");
-		redirect_to("login.php?Message=".$Message);
-}	
+# Check if Email already exists (Prepared stmnt)
+$exists = "";	
+$sql = 'SELECT email from users WHERE email = :email LIMIT 1';
+$sth = $dbh->prepare($sql);
+if ($sth === false) {
+    die("Server error. We apologize for the inconvenience. ");
+}
+$ok = $sth->execute(array(':email' => $email));
+if (!$ok) {
+    die("Server error. We apologize for the inconvenience.");
+}
+//If email doesn't exist, continue. 
+	if ($sth->rowCount() == 1) {
+		$exists .= "e";
 	}
-?><!DOCTYPE html>
+// If the email is found in the DB, set URL param and refresh while exiting
+	if ($exists == "e") {
+	 	$Message = urlencode("EmailExists");
+		redirect_to("register.php?Message=".$Message);
+		exit(1);
+}
+	else 
+#Verify Invite Code (Prepared stmnt)
+$exists1 = "";	
+$sql = 'SELECT invitecode from regcodes WHERE invitecode = :invitecode LIMIT 1';
+$sth = $dbh->prepare($sql);
+if ($sth === false) {
+    die("Server error. We apologize for the inconvenience.");
+}
+$ok = $sth->execute(array(':invitecode' => $invitecode));
+if (!$ok) {
+    die("Server error. We apologize for the inconvenience.");
+}
+	if ($sth->rowCount() == 1) {
+		$exists1 .= "e";
+	}
+	if ($exists1 == "e"){
+#Insert Data into Database (Prepared stmnt)
+$sth = $dbh->prepare("INSERT INTO users
+	(uid, email, pwd, first_name, last_name, house_number, phone, date_entered) 
+	VALUES (NULL, :email, :pwd, :first_name, :last_name, :house_number, :phone, NULL)");
+if ($sth === false) {
+    die("Server error. We apologize for the inconvenience.");
+}
+$ok = $sth->execute(array(':email' => $email, ':pwd' => $pwd, ':first_name' => $first_name, 
+':last_name' => $last_name, ':house_number' => $house_number, ':phone' => $phone));
+if (!$ok) {
+    die("Server error. We apologize for the inconvenience.");
+}
+		if ($ok) {
+		//If all's good, redirect to login with URL param to be handled there
+		$Message = urlencode("RegConfirm");
+		redirect_to("login.php?Message=".$Message);
+} 
+		else {
+			echo "Server error. We apologize for the inconvenience.";
+			exit();
+		}
+	}
+	else {
+	$Message = urlencode("RegCodeError");
+			redirect_to("register.php?Message=".$Message); 
+			}
+}
+?> 
 <!--Design Based on W3layouts
 Adapted by Adin Biederman, 2017
 License: Creative Commons Attribution 3.0 Unported
 License URL: http://creativecommons.org/licenses/by/3.0/
 -->
+<!DOCTYPE html>
 <html lang="en">
 <head>
-<title>Member Login</title>
+<title>Register</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta charset="utf-8">
 <meta name="keywords" content="Agrico Farm Responsive web template, Bootstrap Web Templates, Flat Web Templates, Android Compatible web template, 
@@ -108,6 +162,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 										<a href="codes.html" class="dropdown-toggle" data-hover="Pages" data-toggle="dropdown">Member Pages <b class="caret"></b></a>
 										<ul class="dropdown-menu">
 										<?php
+										//Change the dropdown from Login to Home if logged in
 										if (logged_in() == true) {
 											$menuitem = "Home";
 										} else {
@@ -126,7 +181,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 				</div>
 				<!-- agileits-top-heading -->
 				<div class="agileits-top-heading">
-					<h2>Member Login</h2>
+					<h2>Register</h2>
 				</div>
 				<!-- //agileits-top-heading -->
 			</div>
@@ -136,31 +191,38 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 	<!-- about -->
 	<!-- main-textgrids -->
 	<div class="main-textgrids">
-		<div class="container">
-			</div> <center>
-			<!-- The HTML login form -->
-	<form action="<?=$_SERVER['PHP_SELF']?>" method="post">
-		<h8 style="padding-top: 20px; padding-right: 15px; padding-bottom: 20px; padding-left: 15px">Email: </h8><input type="text" name="email" /><br />
-		Password: <input type="password" name="password" /><br />
-		Remember me: <input type="checkbox" name="remember" /><br />
+		<div id="page" class="container">
+	<center>
+		<div class="column1">
+			<div class="title">
+				<br>
+<!-- The HTML registration form -->
+<!-- TODO: Fix Formatting, so not fully centered -->
+<form action="<?=$_SERVER['PHP_SELF']?>" method="post">
+	Email: <input type="type" name="email" /><br />
+	Password: <input type="password" name="password" /><br />
+	First name: <input type="text" name="first_name" /><br />
+	Last name: <input type="text" name="last_name" /><br />
+	House Number: <input type="text" name="house_number" /><br />
+	Phone Number: <input type="text" name="phone" /><br />
+	Registration Code: <input type="text" name="invitecode" /><br />
+	
  
-		<input type="submit" name="submit" value="Login" />
-		
-	</form>
-	<br>
-	<a href="register.php">Register</a>	<br> <br><font color="red">
-<?
+	<input type="submit" name="submit" value="Register" />
+	<br><br>
+	<?
 //Check URL param for string, and present corresponding banner in response
 if(isset($_GET["Message"])) {
-  if($_GET["Message"] == 'RegConfirm') {
-    echo "<div class=\"alert alert-success\" role=\"alert\"><strong>Registration Successful!</strong> You can now sign in using your inputted credentials. </div>";
-  } else if ($_GET["Message"] == 'AuthError') {
-    echo "<div class=\"alert alert-danger\" role=\"alert\"><strong>Incorrect email/password combo!</strong> For account help, please email carollc@comcast.net</div>"; 
-  } 
+  if($_GET["Message"] == 'RegCodeError') {
+    echo "<div class=\"alert alert-danger\" role=\"alert\"><strong>Invalid Registration Code!</strong> To get a registration code, please email carollc@comcast.net.</div>";
+      } else if ($_GET["Message"] == 'EmailExists') {
+    echo "<div class=\"alert alert-danger\" role=\"alert\"><strong>Email already in use!</strong> Please use a different email.</div>"; 
 }
-?>
-
-</center> </font>
+}
+?> <br><br>
+	<a href="login.php">Back</a>
+</form>
+</center>
 		</div>
 		</div>
 	<!-- //main-textgrids -->

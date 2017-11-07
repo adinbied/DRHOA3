@@ -14,7 +14,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<title>Member Login</title>
+<title>Member Home</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta charset="utf-8">
 <meta name="keywords" content="Agrico Farm Responsive web template, Bootstrap Web Templates, Flat Web Templates, Android Compatible web template, 
@@ -55,7 +55,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 				<div class="header-left">
 					<div class="w3layouts-logo">
 						<h1>
-							<a href="index.html">Denney Road <span>Homeowners Association</span></a>
+							<a href="index.php">Denney Road <span>Homeowners Association</span></a>
 						</h1>
 					</div>
 				</div>
@@ -76,14 +76,21 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 							<!-- Collect the nav links, forms, and other content for toggling -->
 							<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 								<ul class="nav navbar-nav">
-									<li><a class="active" href="index.html">Home</a></li>
+									<li><a href="index.php">Home</a></li>
 									<li><a href="about.html">About</a></li>
-									<li><a href="gallery.html">Community</a></li>
+									<li><a href="codes.html">Community</a></li>
 									<li class="dropdown">
 										<a href="codes.html" class="dropdown-toggle" data-hover="Pages" data-toggle="dropdown">Member Pages <b class="caret"></b></a>
 										<ul class="dropdown-menu">
-											<li><a href="login.php">Login</a></li>
-											<li><a href="codes.html">Documents</a></li>
+										<?php
+										if (logged_in() == true) {
+											$menuitem = "Home";
+										} else {
+											$menuitem = "Login";
+										}
+										?>
+											<li><a href="login.php"><?php echo $menuitem; ?></a></li>
+											<li><a href="documents.php">Documents</a></li>
 										</ul>
 									</li>
 									<li><a href="contact.html">Contact</a></li>
@@ -94,7 +101,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 				</div>
 				<!-- agileits-top-heading -->
 				<div class="agileits-top-heading">
-					<h2>Member Login</h2>
+					<h2>Member Home</h2>
 				</div>
 				<!-- //agileits-top-heading -->
 			</div>
@@ -131,19 +138,20 @@ $fname = $obj->first_name;
 echo "<p>Welcome {$fname}!</p>";
 ?></h2><span class="byline">Welcome to the DRHOA Member Home Page!</span> 
 </div>
-			<a href="index.html">Main Page</a>
+			<a href="index.php">Main Page</a>
 			<a href="contact.html">Contact</a>
 			<a href="documents.php">Documents</a>
-			<a href="resources.html">Resources</a>
+			<a href="resources.php">Resources</a> 
+			<br>
 <?
 // showing the login & register or logout link
 if (logged_in() == true) {
-	echo '<a href="logout.php">Log Out</a>';
+	echo '<br><a href="logout.php">Log Out</a>';
 } else {
 	echo '<a href="login.php">Login</a>';
 }
 }
-?>
+?> <br><br></div> </div>
 </center>
 	<!-- //main-textgrids -->
 	<!-- footer -->

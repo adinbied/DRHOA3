@@ -1,3 +1,8 @@
+<?php 
+require_once("functions.php");
+require_once("db_const.php");
+session_start();
+?>
 <!--Design Based on W3layouts
 Adapted by Adin Biederman, 2017
 License: Creative Commons Attribution 3.0 Unported
@@ -46,7 +51,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 				<div class="header-left">
 					<div class="w3layouts-logo">
 						<h1>
-							<a href="index.html">Denney Road <span>Homeowners Association</span></a>
+							<a href="index.php">Denney Road <span>Homeowners Association</span></a>
 						</h1>
 					</div>
 				</div>
@@ -67,14 +72,21 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 							<!-- Collect the nav links, forms, and other content for toggling -->
 							<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 								<ul class="nav navbar-nav">
-									<li><a class="active" href="index.html">Home</a></li>
+									<li><a class="active" href="index.php">Home</a></li>
 									<li><a href="about.html">About</a></li>
-									<li><a href="gallery.html">Community</a></li>
+									<li><a href="codes.html">Community</a></li>
 									<li class="dropdown">
 										<a href="codes.html" class="dropdown-toggle" data-hover="Pages" data-toggle="dropdown">Member Pages <b class="caret"></b></a>
 										<ul class="dropdown-menu">
-											<li><a href="login.php">Login</a></li>
-											<li><a href="codes.html">Documents</a></li>
+										<?php
+										if (logged_in() == true) {
+											$menuitem = "Home";
+										} else {
+											$menuitem = "Login";
+										}
+										?>
+											<li><a href="login.php"><?php echo $menuitem; ?></a></li>
+											<li><a href="documents.php">Documents</a></li>
 										</ul>
 									</li>
 									<li><a href="contact.html">Contact</a></li>
