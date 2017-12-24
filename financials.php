@@ -12,6 +12,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 <html lang="en">
 <head>
 <title>Financial Documents</title>
+<link rel="icon" type="image/ico" href="favicon.ico">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta charset="utf-8">
 <meta name="keywords" content="Agrico Farm Responsive web template, Bootstrap Web Templates, Flat Web Templates, Android Compatible web template, 
@@ -52,7 +53,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 				<div class="header-left">
 					<div class="w3layouts-logo">
 						<h1>
-							<a href="index.php">Denney Road <span>Homeowners Association</span></a>
+							<a href="index.php"><span>Denney Road Rowhomes Homeowners Association</span></a>
 						</h1>
 					</div>
 				</div>
@@ -74,8 +75,8 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 							<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 								<ul class="nav navbar-nav">
 									<li><a href="index.php">Home</a></li>
-									<li><a href="about.html">About</a></li>
-									<li><a href="codes.html">Community</a></li>
+									<li><a href="gallery.php">Gallery</a></li>
+									<li><a href="calendar.php">Calendar</a></li>
 									<li class="dropdown">
 										<a href="codes.html" class="dropdown-toggle" data-hover="Pages" data-toggle="dropdown">Member Pages <b class="caret"></b></a>
 										<ul class="dropdown-menu">
@@ -90,7 +91,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 											<li><a href="documents.php">Documents</a></li>
 										</ul>
 									</li>
-									<li><a href="contact.html">Contact</a></li>
+									<li><a href="contact.php">Contact</a></li>
 								</ul>	
 								<div class="clearfix"> </div>
 							</div>	
@@ -101,6 +102,21 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 					<h2>Financial Documents</h2>
 				</div>
 				<!-- //agileits-top-heading -->
+				<?php
+    if( isset($_SESSION["loggedIn"] ) == "yes") { //You have to set that somewhere else just like $logged
+    ?>
+					<div id="page" class="container">
+				<ol class="breadcrumb">
+							<li><a href="home.php">Home</a></li>
+							<li><a href="documents.php">Documents</a></li>
+							<li class="active">Financials</li>
+						</ol>
+						</div>
+						<?php } else { ?>
+       <br> <br> </div>
+    <?php
+    }
+?> 
 			</div>
 		</div>
 	</div>
@@ -112,29 +128,28 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 <?php
     if( isset($_SESSION["loggedIn"] ) == "yes") { //You have to set that somewhere else just like $logged
     ?>
-	<center><div class="column1"><div class="title">
-				<span class="byline">Association yearly financial statements can be downloaded here.</span>
-				 <li><a href="Files/Financials/2008_Yearly_Finacial_Report.xls"><font color="blue">2008 Financials (Excel)</font></a></li>
-				 <li><a href="Files/Financials/2009_Yearly_Finacial_Report.xls"><font color="blue">2009 Financials (Excel)</font></a></li>
-				 <li><a href="Files/Financials/2010_Yearly_Finacial_Report.pdf"><font color="blue">2010 Financials (PDF)</font></a></li>
-				 <li><a href="Files/Financials/2011_Yearly_Finacial_Report.pdf"><font color="blue">2011 Financials (PDF)</font></a></li>
-				 <li><a href="Files/Financials/2012_Yearly_Finacial_Report.pdf"><font color="blue">2012 Financials (PDF)</font></a></li>
-				 <li><a href="Files/Financials/2013_Yearly_Finacial_Report.pdf"><font color="blue">2013 Financials (PDF)</font></a></li>
-			</div>
-			
-			
-			 <a href="documents.php">Back</a>
+	<center><div class="column1">				
+	<div class="list-group list-group-alternate"> 
+	<a href="Files/Financials/2008_Yearly_Finacial_Report.xls" class="list-group-item"><font color=blue>2008 Financials (Excel)</font></a> 
+	<a href="Files/Financials/2009_Yearly_Finacial_Report.xls" class="list-group-item"><font color=blue>2009 Financials (Excel)</font></a>
+	<a href="Files/Financials/2010_Yearly_Finacial_Report.pdf" class="list-group-item"><font color=blue>2010 Financials (PDF)</font></a> 
+	<a href="Files/Financials/2011_Yearly_Finacial_Report.pdf" class="list-group-item"><font color=blue>2011 Financials (PDF)</font></a>
+	<a href="Files/Financials/2012_Yearly_Finacial_Report.pdf" class="list-group-item"><font color=blue>2012 Financials (PDF)</font></a> 
+	<a href="Files/Financials/2013_Yearly_Finacial_Report.pdf" class="list-group-item"><font color=blue>2013 Financials (PDF)</font></a>
+</div>
+			<h4><a href="documents.php"><span class="label label-primary">Back</span></a></h4>
 			     </center>
 		</div>
 		</div>
 	</div>
 
-    <?php } else { ?>
-        <p> We're sorry, you must be logged in to view this page. <a href="login.php">Login</a> </p> 
+  <?php } else { ?>
+       <center> 	<div class="alert alert-danger" role="alert"><strong>Permission Denied.</strong> We're sorry, you must be logged in to view this page.</div>
+<h3><a href="login.php"><span class="label label-primary">Login</span></a></h3>
+						</center> <br> </div>
     <?php
     }
 ?>
-
 		</div>
 		</div>
 	<!-- //main-textgrids -->
@@ -143,94 +158,68 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 		<div class="container">
 			<div class="w3-agileits-footer-grids">
 				<div class="col-md-3 w3ls-footer-grid">
-					<h4>About <span>Agrico Farm</span></h4>
+					<h4>About The <span>Denney Road Rowhomes</span></h4>
 					<div class="wthree-footer-info">
-						<p>Etiam feugiat malesuada arcu, eget eleifend eros interdum vel. Duis sit amet nisl in urna vulputate sodales sit amet sed enim.</p>
+						<p>The Denney Road Rowhomes are a planned community consisting of 14 homes located in Beaverton, OR.</p>
 						<ul>
-							<li><i class="fa fa-map-marker" aria-hidden="true"></i> : Inclore Place,Kingsport 56777.</li>
-							<li><i class="fa fa-phone" aria-hidden="true"></i> : +1 234 567 9871</li>
-							<li><i class="fa fa-envelope" aria-hidden="true"></i> : <a href="mailto:info@example.com">mail@example.com</a></li>
+							<li><i class="fa fa-map-marker" aria-hidden="true"></i> : <a href="https://goo.gl/maps/UaVQYGjzSR52">10337 SW Denney Rd<br> Beaverton, OR 97008</a></li>
+							<li><i class="fa fa-phone" aria-hidden="true"></i> : <a href="tel:+15037035128">503-703-5128</a></li>
+							<li><i class="fa fa-envelope" aria-hidden="true"></i> : <a href="mailto:carollc@comcast.net">carollc@comcast.net</a></li>
 						</ul>
 					</div>
 				</div>
 				<div class="col-md-3 w3ls-footer-grid">
-					<h4>Recent <span>Posts</span></h4>
+					<h4>Upcoming <span>Events</span></h4>
 					<div class="agile-post-grids">
-						<div class="agile-post-grid">
-							<div class="col-md-5 agile-post-left">
-								<a href="single.html">
-									<img src="images/p1.jpg" alt="" />
-								</a>
-							</div>
-							<div class="col-md-7 agile-post-right">
-								<h5><a href="single.html">Nulla at arcu eu justo blandit.</a></h5>
-								<p><i class="fa fa-calendar-o" aria-hidden="true"></i> 03 Jan 2017</p>
-							</div>
-							<div class="clearfix"> </div>
-						</div>
-						<div class="agile-post-grid">
-							<div class="col-md-5 agile-post-left">
-								<a href="single.html">
-									<img src="images/p2.jpg" alt="" />
-								</a>
-							</div>
-							<div class="col-md-7 agile-post-right">
-								<h5><a href="single.html">Nulla at arcu eu justo blandit.</a></h5>
-								<p><i class="fa fa-calendar-o" aria-hidden="true"></i> 24 Jan 2017</p>
-							</div>
-							<div class="clearfix"> </div>
-						</div>
-					</div>
+				<div id="with-my-template" style="width: 100%; height: 180px;">
+		<style type="text/css">
+      #gcf-design {
+        height: 275px;
+        width: 225px;
+        background: #d4d4d4;
+        filter: none;
+      }
+      #gcf-design .gcf-header-block { background: #2AABEB; filter:none; }
+    </style>
+    <div id="gcf-design">
+    </div>
+<script src="js/jquery-1.11.1.min.js"></script>
+<script type="text/javascript" src="js/jquery.gcal_flow.js"></script>
+<link href="js/jquery.gcal_flow.css" rel="stylesheet" type="text/css">
+    <script type="text/javascript">
+      $('#gcf-design').gCalFlow({
+        calid: 'ie7gi2soi06ghb3i5e13b03fkc@group.calendar.google.com',
+        maxitem: 10
+      });
+    </script>
+    </div>
+
+				</div>
 				</div>
 				<div class="col-md-3 w3ls-footer-grid">
-					<h4>Our <span>Navigation</span></h4>
+				<center><h4>Quick <span>Links</span></h4>
 					<ul>
-						<li><a href="about.html">About</a></li>
-						<li><a href="gallery.html">Gallery</a></li>
-						<li><a href="icons.html">Icons</a></li>
-						<li><a href="codes.html">Short Codes</a></li>
-						<li><a href="contact.html">Contact Us</a></li>
-					</ul>
+						<li><a href="index.php">Site Home</a></li>
+						<li><a href="calendar.php">Calendar</a></li>
+						<li><a href="documents.php">Documents</a></li>
+						<li><a href="contact.php">Contact Us</a></li>
+						<li><a href="gallery.php">Gallery</a></li>
+						<?php
+										if (logged_in() == true) {
+											$menuitem = "Home";
+										} else {
+											$menuitem = "Login";
+										}
+										?>
+											<li><a href="login.php"><?php echo $menuitem; ?></a></li>
+					</ul></center>
 				</div>
 				<div class="col-md-3 w3ls-footer-grid">
-					<h4>Flickr <span>Images</span></h4>
+					<h4>Questions or <span>Comments?</span></h4>
 					<div class="w3l-footer-popular">
-						<div class="popular-grids">
-							<div class="popular-grid">
-								<a href="single.html"><img src="images/p1.jpg" alt=""></a>
-							</div>
-							<div class="popular-grid">
-								<a href="single.html"><img src="images/p2.jpg" alt=""></a>
-							</div>
-							<div class="popular-grid">
-								<a href="single.html"><img src="images/p3.jpg" alt=""></a>
-							</div>
-							<div class="clearfix"> </div>
-						</div>
-						<div class="popular-grids">
-							<div class="popular-grid">
-								<a href="single.html"><img src="images/p4.jpg" alt=""></a>
-							</div>
-							<div class="popular-grid">
-								<a href="single.html"><img src="images/p1.jpg" alt=""></a>
-							</div>
-							<div class="popular-grid">
-								<a href="single.html"><img src="images/p2.jpg" alt=""></a>
-							</div>
-							<div class="clearfix"> </div>
-						</div>
-						<div class="popular-grids">
-							<div class="popular-grid">
-								<a href="single.html"><img src="images/p3.jpg" alt=""></a>
-							</div>
-							<div class="popular-grid">
-								<a href="single.html"><img src="images/p4.jpg" alt=""></a>
-							</div>
-							<div class="popular-grid">
-								<a href="single.html"><img src="images/p1.jpg" alt=""></a>
-							</div>
-							<div class="clearfix"> </div>
-						</div>
+					<div class="wthree-footer-info">
+					<p>If you have any questions, <br>comments, or concerns, feel<br> free to contact us through<br> any of the means linked <a href="contact.php">here</a>.</p>
+					</div>
 					</div>
 				</div>
 				<div class="clearfix"> </div>
@@ -241,7 +230,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 	<!-- copyright -->
 	<div class="agileits-w3layouts">
 		<div class="container">
-			<p>© 2017 Agrico Farm. All rights reserved | Design by <a href="http://w3layouts.com">W3layouts</a></p>
+			<p> Copyright © <?php echo date("Y"); ?> Denney Road Rowhomes HOA | All rights reserved.</p>
 		</div>
 	</div>
 	<!-- //copyright -->

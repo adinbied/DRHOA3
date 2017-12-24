@@ -12,6 +12,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 <html lang="en">
 <head>
 <title>Denney Road HOA</title>
+<link rel="icon" type="image/ico" href="favicon.ico">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta charset="utf-8">
 <meta name="keywords" content="Denney Road Home Owners Association, DRHOA, Denney, Rd, Beaverton, HOA, Oregon, U" />
@@ -30,6 +31,8 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 <link href="//fonts.googleapis.com/css?family=Roboto:100,100i,300,300i,400,400i,500,500i,700,700i,900,900i" rel="stylesheet">
 <!-- //font -->
 <script src="js/jquery-1.11.1.min.js"></script>
+<script type="text/javascript" src="js/jquery.gcal_flow.js"></script>
+<link href="js/jquery.gcal_flow.css" rel="stylesheet" type="text/css">
 <script src="js/bootstrap.js"></script>
 <script type="text/javascript">
 	jQuery(document).ready(function($) {
@@ -51,7 +54,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 				<div class="header-left">
 					<div class="w3layouts-logo">
 						<h1>
-							<a href="index.php">Denney Road <span>Homeowners Association</span></a>
+							<a href="index.php"><span>Denney Road Rowhomes Homeowners Association</span></a>
 						</h1>
 					</div>
 				</div>
@@ -73,10 +76,10 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 							<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 								<ul class="nav navbar-nav">
 									<li><a class="active" href="index.php">Home</a></li>
-									<li><a href="about.html">About</a></li>
-									<li><a href="codes.html">Community</a></li>
+									<li><a href="gallery.php">Gallery</a></li>
+									<li><a href="calendar.php">Calendar</a></li>
 									<li class="dropdown">
-										<a href="codes.html" class="dropdown-toggle" data-hover="Pages" data-toggle="dropdown">Member Pages <b class="caret"></b></a>
+										<a href="login.php" class="dropdown-toggle" data-hover="Pages" data-toggle="dropdown">Member Pages <b class="caret"></b></a>
 										<ul class="dropdown-menu">
 										<?php
 										if (logged_in() == true) {
@@ -89,7 +92,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 											<li><a href="documents.php">Documents</a></li>
 										</ul>
 									</li>
-									<li><a href="contact.html">Contact</a></li>
+									<li><a href="contact.php">Contact</a></li>
 								</ul>	
 								<div class="clearfix"> </div>
 							</div>	
@@ -98,7 +101,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 				<!-- w3-banner -->
 				<div class="w3-banner">
 					<div class="w3layouts-border"> </div>
-					<h2>Located In <span>Beaverton, OR</span></h2>
+					<h2>Come<span>Explore!</span></h2>
 					<p>Welcome to the Website of <span>the Denney Road Homeowners Association.</span></p>
 					<div class="w3layouts-border agileits-border"> </div>
 				</div>
@@ -111,12 +114,12 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 	<div class="welcome">
 		<div class="container">
 			<div class="agileits-heading">
-				<h3>Welcome</h3>
+				<h3>Overview</h3>
 			</div>
 			<div class="w3_welcome_grids">
 				<div class="col-md-6 w3_welcome_grid_left">
 					<h5>What are the Denney Road Rowhomes?</h5>
-					<p>The Denney Road Rowhomes are a planned community consisting of 14 rowhomes. Our location provides easy access to downtown Portland, Washington Square Mall, the Silicon Forest in Hillsboro and nearby green spaces including Fanno Creek Trail and Camille Park.</p>
+					<p>The Denney Road Rowhomes are a planned community consisting of 14 rowhomes. Our location provides easy access to downtown Portland, Mount Hood, the coast, and the Silicon Forest in Hillsboro. Beaverton parks including Fanno Creek Trail and Camille Park are reached easily by foot.</p>
 					<div class="panel-group welcome_panel" id="accordion" role="tablist" aria-multiselectable="true">
 					  <div class="panel panel-default">
 						<div class="panel-heading" role="tab" id="headingOne">
@@ -133,30 +136,21 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 						</div>
 					  </div>
 					  <div class="panel panel-default">
-						<div class="panel-heading" role="tab" id="headingTwo">
-						  <h4 class="panel-title asd">
-							<a class="pa_italic collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-							  <span class="glyphicon glyphicon-plus" aria-hidden="true"></span><i class="glyphicon glyphicon-minus" aria-hidden="true"></i>Community
-							</a>
-						  </h4>
-						</div>
-						<div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
-						   <div class="panel-body panel_text">
-							We are a community of 14 homes, near the beautiful Fanno Creek Wetlands, easy shopping, and multiple opportunities for recreation.
-						  </div>
-						</div>
-					  </div>
-					  <div class="panel panel-default">
 						<div class="panel-heading" role="tab" id="headingThree">
 						  <h4 class="panel-title asd">
 							<a class="pa_italic collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-							  <span class="glyphicon glyphicon-plus" aria-hidden="true"></span><i class="glyphicon glyphicon-minus" aria-hidden="true"></i>autem accusamus terry qui
+							  <span class="glyphicon glyphicon-plus" aria-hidden="true"></span><i class="glyphicon glyphicon-minus" aria-hidden="true"></i>Schools and Local Area
 							</a>
 						  </h4>
 						</div>
 						<div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
 						   <div class="panel-body panel_text">
-							Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+							<a href="https://www.beaverton.k12.or.us/schools/mckay/">McKay Elementary</a><br>
+							<a href="https://www.beaverton.k12.or.us/schools/whitford">Whitford Middle School</a><br>
+							<a href="https://www.beaverton.k12.or.us/schools/southridge">Southridge High School</a><br>
+							<a href="https://www.beaverton.k12.or.us/">Multiple Options Schools</a><br><br>
+							<b>Also Nearby:</b><br><a href="https://www.beavertonoregon.gov/">City of Beaverton</a><br>
+							<a href="http://www.thprd.org/">Tualatin Hills Park and Recreation District </a>
 						  </div>
 						</div>
 					  </div>
@@ -164,20 +158,23 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 						<div class="panel-heading" role="tab" id="headingFour">
 						  <h4 class="panel-title asd">
 							<a class="pa_italic collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
-							  <span class="glyphicon glyphicon-plus" aria-hidden="true"></span><i class="glyphicon glyphicon-minus" aria-hidden="true"></i>excepturi sint cliche proident
+							  <span class="glyphicon glyphicon-plus" aria-hidden="true"></span><i class="glyphicon glyphicon-minus" aria-hidden="true"></i>Things To Do
 							</a>
 						  </h4>
 						</div>
 						<div id="collapseFour" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingFour">
 						   <div class="panel-body panel_text">
-							Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+							Washington Square Mall <br>
+							Beaverton Farmer's Market <br>
+							Multnomah Village <br>
+							Hillsdale<br>
 						  </div>
 						</div>
 					  </div>
 					</div>
 				</div>
 				<div class="col-md-6 w3_welcome_grid_right">
-					<img src="images/2.jpg" alt="" />
+					<img src="images/bridge.jpg" alt="" />
 				</div>
 				<div class="clearfix"> </div>
 			</div>
@@ -206,94 +203,65 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 		<div class="container">
 			<div class="w3-agileits-footer-grids">
 				<div class="col-md-3 w3ls-footer-grid">
-					<h4>About <span>Agrico Farm</span></h4>
+					<h4>About The <span>Denney Road Rowhomes</span></h4>
 					<div class="wthree-footer-info">
-						<p>Etiam feugiat malesuada arcu, eget eleifend eros interdum vel. Duis sit amet nisl in urna vulputate sodales sit amet sed enim.</p>
+						<p>The Denney Road Rowhomes are a planned community consisting of 14 homes located in Beaverton, OR.</p>
 						<ul>
-							<li><i class="fa fa-map-marker" aria-hidden="true"></i> : Inclore Place,Kingsport 56777.</li>
-							<li><i class="fa fa-phone" aria-hidden="true"></i> : +1 234 567 9871</li>
-							<li><i class="fa fa-envelope" aria-hidden="true"></i> : <a href="mailto:info@example.com">mail@example.com</a></li>
+							<li><i class="fa fa-map-marker" aria-hidden="true"></i> : <a href="https://goo.gl/maps/UaVQYGjzSR52">10337 SW Denney Rd<br> Beaverton, OR 97008</a></li>
+							<li><i class="fa fa-phone" aria-hidden="true"></i> : <a href="tel:+15037035128">503-703-5128</a></li>
+							<li><i class="fa fa-envelope" aria-hidden="true"></i> : <a href="mailto:carollc@comcast.net">carollc@comcast.net</a></li>
 						</ul>
 					</div>
 				</div>
 				<div class="col-md-3 w3ls-footer-grid">
-					<h4>Recent <span>Posts</span></h4>
+					<h4>Upcoming <span>Events</span></h4>
 					<div class="agile-post-grids">
-						<div class="agile-post-grid">
-							<div class="col-md-5 agile-post-left">
-								<a href="single.html">
-									<img src="images/p1.jpg" alt="" />
-								</a>
-							</div>
-							<div class="col-md-7 agile-post-right">
-								<h5><a href="single.html">Nulla at arcu eu justo blandit.</a></h5>
-								<p><i class="fa fa-calendar-o" aria-hidden="true"></i> 03 Jan 2017</p>
-							</div>
-							<div class="clearfix"> </div>
-						</div>
-						<div class="agile-post-grid">
-							<div class="col-md-5 agile-post-left">
-								<a href="single.html">
-									<img src="images/p2.jpg" alt="" />
-								</a>
-							</div>
-							<div class="col-md-7 agile-post-right">
-								<h5><a href="single.html">Nulla at arcu eu justo blandit.</a></h5>
-								<p><i class="fa fa-calendar-o" aria-hidden="true"></i> 24 Jan 2017</p>
-							</div>
-							<div class="clearfix"> </div>
-						</div>
-					</div>
+				<div id="with-my-template" style="width: 100%; height: 180px;">
+		<style type="text/css">
+      #gcf-design {
+        height: 275px;
+        width: 225px;
+        background: #d4d4d4;
+        filter: none;
+      }
+      #gcf-design .gcf-header-block { background: #2AABEB; filter:none; }
+    </style>
+    <div id="gcf-design">
+    </div>
+    <script type="text/javascript">
+      $('#gcf-design').gCalFlow({
+        calid: 'ie7gi2soi06ghb3i5e13b03fkc@group.calendar.google.com',
+        maxitem: 10
+      });
+    </script>
+    </div>
+
+				</div>
 				</div>
 				<div class="col-md-3 w3ls-footer-grid">
-					<h4>Our <span>Navigation</span></h4>
+				<center><h4>Quick <span>Links</span></h4>
 					<ul>
-						<li><a href="about.html">About</a></li>
-						<li><a href="gallery.html">Gallery</a></li>
-						<li><a href="icons.html">Icons</a></li>
-						<li><a href="codes.html">Short Codes</a></li>
-						<li><a href="contact.html">Contact Us</a></li>
-					</ul>
+						<li><a href="index.php">Site Home</a></li>
+						<li><a href="calendar.php">Calendar</a></li>
+						<li><a href="documents.php">Documents</a></li>
+						<li><a href="contact.php">Contact Us</a></li>
+						<li><a href="gallery.php">Gallery</a></li>
+						<?php
+										if (logged_in() == true) {
+											$menuitem = "Home";
+										} else {
+											$menuitem = "Login";
+										}
+										?>
+											<li><a href="login.php"><?php echo $menuitem; ?></a></li>
+					</ul></center>
 				</div>
 				<div class="col-md-3 w3ls-footer-grid">
-					<h4>Flickr <span>Images</span></h4>
+					<h4>Questions or <span>Comments?</span></h4>
 					<div class="w3l-footer-popular">
-						<div class="popular-grids">
-							<div class="popular-grid">
-								<a href="single.html"><img src="images/p1.jpg" alt=""></a>
-							</div>
-							<div class="popular-grid">
-								<a href="single.html"><img src="images/p2.jpg" alt=""></a>
-							</div>
-							<div class="popular-grid">
-								<a href="single.html"><img src="images/p3.jpg" alt=""></a>
-							</div>
-							<div class="clearfix"> </div>
-						</div>
-						<div class="popular-grids">
-							<div class="popular-grid">
-								<a href="single.html"><img src="images/p4.jpg" alt=""></a>
-							</div>
-							<div class="popular-grid">
-								<a href="single.html"><img src="images/p1.jpg" alt=""></a>
-							</div>
-							<div class="popular-grid">
-								<a href="single.html"><img src="images/p2.jpg" alt=""></a>
-							</div>
-							<div class="clearfix"> </div>
-						</div>
-						<div class="popular-grids">
-							<div class="popular-grid">
-								<a href="single.html"><img src="images/p3.jpg" alt=""></a>
-							</div>
-							<div class="popular-grid">
-								<a href="single.html"><img src="images/p4.jpg" alt=""></a>
-							</div>
-							<div class="popular-grid">
-								<a href="single.html"><img src="images/p1.jpg" alt=""></a>
-							</div>
-							<div class="clearfix"> </div>
-						</div>
+					<div class="wthree-footer-info">
+					<p>If you have any questions, <br>comments, or concerns, feel<br> free to contact us through<br> any of the means linked <a href="contact.php">here</a>.</p>
+					</div>
 					</div>
 				</div>
 				<div class="clearfix"> </div>
@@ -304,7 +272,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 	<!-- copyright -->
 	<div class="agileits-w3layouts">
 		<div class="container">
-			<p>© 2017 Agrico Farm. All rights reserved | Design by <a href="http://w3layouts.com">W3layouts</a></p>
+			<p> Copyright © <?php echo date("Y"); ?> Denney Road Rowhomes HOA | All rights reserved.</p>
 		</div>
 	</div>
 	<!-- //copyright -->

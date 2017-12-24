@@ -1,45 +1,17 @@
 <?php 
- // Get Needed DB info & redirect if already logged in
 	require_once("functions.php");
 	require_once("db_const.php");
 	session_start();
-	if (logged_in() == true) {
-		redirect_to("home.php");
-	}
-//set Variables
-if (isset($_POST['submit'])) {
-	$pass = $_POST['password'];
-	$email = $_POST['email'];
- 
-// Remember Me Cookies
-if (isset($_POST['remember'])) {	
-		session_set_cookie_params('604800'); //one week (value in seconds)
-		session_regenerate_id(true);
-	} 
-//Get user info from database and authenticate (PDO Protected)
-$user = DB::run("SELECT * FROM users WHERE email = ?", [$email])->fetch();
-if ($user && password_verify($pass, $user['pwd'])) {
-    $_SESSION['uid'] = $user['uid'];
-    $_SESSION['email'] = $user['email'];
-    $_SESSION['loggedIn'] = 'yes';
-
-    header('Location: home.php');
-    exit;
-} else {
-//If user&pass is incorrect, refresh with URL param AuthError to be handled later
-   $Message = urlencode("AuthError");
-		redirect_to("login.php?Message=".$Message);
-}	
-	}
-?><!DOCTYPE html>
+	?>
 <!--Design Based on W3layouts
 Adapted by Adin Biederman, 2017
 License: Creative Commons Attribution 3.0 Unported
 License URL: http://creativecommons.org/licenses/by/3.0/
 -->
+<!DOCTYPE html>
 <html lang="en">
 <head>
-<title>Member Login</title>
+<title>Calendar</title>
 <link rel="icon" type="image/ico" href="favicon.ico">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta charset="utf-8">
@@ -104,7 +76,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 								<ul class="nav navbar-nav">
 									<li><a href="index.php">Home</a></li>
 									<li><a href="gallery.php">Gallery</a></li>
-									<li><a href="calendar.php">Calendar</a></li>
+									<li><a class="active" href="calendar.php">Calendar</a></li>
 									<li class="dropdown">
 										<a href="codes.html" class="dropdown-toggle" data-hover="Pages" data-toggle="dropdown">Member Pages <b class="caret"></b></a>
 										<ul class="dropdown-menu">
@@ -127,20 +99,10 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 				</div>
 				<!-- agileits-top-heading -->
 				<div class="agileits-top-heading">
-					<h2>Member Login</h2>
+					<h2>Community Calendar</h2>
 				</div>
 				<!-- //agileits-top-heading -->
-				<center>
-				<?
-//Check URL param for string, and present corresponding banner in response
-if(isset($_GET["Message"])) {
-  if($_GET["Message"] == 'RegConfirm') {
-    echo "<div class=\"alert alert-success\" role=\"alert\"><strong>Registration Successful!</strong> You can now sign in using your inputted credentials. </div>";
-  } else if ($_GET["Message"] == 'AuthError') {
-    echo "<div class=\"alert alert-danger\" role=\"alert\"><strong>Incorrect email/password combo!</strong> For account help, please email carollc@comcast.net</div>"; 
-  } 
-}
-?> </center>
+				</div>
 			</div>
 		</div>
 	</div>
@@ -148,21 +110,11 @@ if(isset($_GET["Message"])) {
 	<!-- about -->
 	<!-- main-textgrids -->
 	<div class="main-textgrids">
-		<div class="container">
-			</div> <center>
-			<!-- The HTML login form -->
-	<form action="<?=$_SERVER['PHP_SELF']?>" method="post">
-		<h8 style="padding-top: 20px; padding-right: 15px; padding-bottom: 20px; padding-left: 15px">Email: </h8><input type="text" name="email" /><br />
-		Password: <input type="password" name="password" /><br />
-		Remember me: <input type="checkbox" name="remember" /><br />
- 
-		<input type="submit" name="submit" value="Login" />
-		
-	</form>
-	<br>
-	<a href="register.php">Register</a>	<br> <br><font color="red">
-
-</center> </font>
+		<div id="page" class="container">
+	<center> <div class="column1">
+<iframe src="https://calendar.google.com/calendar/embed?height=600&amp;wkst=1&amp;bgcolor=%23ffffff&amp;src=ie7gi2soi06ghb3i5e13b03fkc%40group.calendar.google.com&amp;color=%238C500B&amp;ctz=America%2FLos_Angeles" style="border-width:0" width="800" height="600" frameborder="0" scrolling="no"></iframe>
+			<h4><a href="index.php"><span class="label label-primary">Back</span></a></h4>
+			     </center>
 		</div>
 		</div>
 	<!-- //main-textgrids -->

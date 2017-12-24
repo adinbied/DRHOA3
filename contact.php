@@ -1,45 +1,17 @@
 <?php 
- // Get Needed DB info & redirect if already logged in
-	require_once("functions.php");
-	require_once("db_const.php");
-	session_start();
-	if (logged_in() == true) {
-		redirect_to("home.php");
-	}
-//set Variables
-if (isset($_POST['submit'])) {
-	$pass = $_POST['password'];
-	$email = $_POST['email'];
- 
-// Remember Me Cookies
-if (isset($_POST['remember'])) {	
-		session_set_cookie_params('604800'); //one week (value in seconds)
-		session_regenerate_id(true);
-	} 
-//Get user info from database and authenticate (PDO Protected)
-$user = DB::run("SELECT * FROM users WHERE email = ?", [$email])->fetch();
-if ($user && password_verify($pass, $user['pwd'])) {
-    $_SESSION['uid'] = $user['uid'];
-    $_SESSION['email'] = $user['email'];
-    $_SESSION['loggedIn'] = 'yes';
-
-    header('Location: home.php');
-    exit;
-} else {
-//If user&pass is incorrect, refresh with URL param AuthError to be handled later
-   $Message = urlencode("AuthError");
-		redirect_to("login.php?Message=".$Message);
-}	
-	}
-?><!DOCTYPE html>
+require_once("functions.php");
+require_once("db_const.php");
+session_start();
+?>
 <!--Design Based on W3layouts
 Adapted by Adin Biederman, 2017
 License: Creative Commons Attribution 3.0 Unported
 License URL: http://creativecommons.org/licenses/by/3.0/
 -->
+<!DOCTYPE html>
 <html lang="en">
 <head>
-<title>Member Login</title>
+<title>Contact</title>
 <link rel="icon" type="image/ico" href="favicon.ico">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta charset="utf-8">
@@ -59,6 +31,9 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 <link href="//fonts.googleapis.com/css?family=Pacifico" rel="stylesheet">
 <link href="//fonts.googleapis.com/css?family=Roboto:100,100i,300,300i,400,400i,500,500i,700,700i,900,900i" rel="stylesheet">
 <!-- //font -->
+<!-- light-box -->
+<link rel="stylesheet" href="css/lightbox.css">
+<!-- //light-box -->
 <script src="js/jquery-1.11.1.min.js"></script>
 <script src="js/bootstrap.js"></script>
 <script type="text/javascript">
@@ -119,7 +94,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 											<li><a href="documents.php">Documents</a></li>
 										</ul>
 									</li>
-									<li><a href="contact.php">Contact</a></li>
+									<li><a class="active" href="contact.php">Contact</a></li>
 								</ul>	
 								<div class="clearfix"> </div>
 							</div>	
@@ -127,45 +102,39 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 				</div>
 				<!-- agileits-top-heading -->
 				<div class="agileits-top-heading">
-					<h2>Member Login</h2>
+					<h2>Contact Us</h2>
 				</div>
 				<!-- //agileits-top-heading -->
-				<center>
-				<?
-//Check URL param for string, and present corresponding banner in response
-if(isset($_GET["Message"])) {
-  if($_GET["Message"] == 'RegConfirm') {
-    echo "<div class=\"alert alert-success\" role=\"alert\"><strong>Registration Successful!</strong> You can now sign in using your inputted credentials. </div>";
-  } else if ($_GET["Message"] == 'AuthError') {
-    echo "<div class=\"alert alert-danger\" role=\"alert\"><strong>Incorrect email/password combo!</strong> For account help, please email carollc@comcast.net</div>"; 
-  } 
-}
-?> </center>
 			</div>
 		</div>
-	</div>
+	</div><center>
+		<h3>Feel free to contact us if you have any questions or concerns.</span></h3></center><br>
 	<!-- //banner -->
-	<!-- about -->
-	<!-- main-textgrids -->
-	<div class="main-textgrids">
+	<!-- contact -->
+		<!-- container -->
 		<div class="container">
-			</div> <center>
-			<!-- The HTML login form -->
-	<form action="<?=$_SERVER['PHP_SELF']?>" method="post">
-		<h8 style="padding-top: 20px; padding-right: 15px; padding-bottom: 20px; padding-left: 15px">Email: </h8><input type="text" name="email" /><br />
-		Password: <input type="password" name="password" /><br />
-		Remember me: <input type="checkbox" name="remember" /><br />
- 
-		<input type="submit" name="submit" value="Login" />
-		
-	</form>
-	<br>
-	<a href="register.php">Register</a>	<br> <br><font color="red">
-
-</center> </font>
+			<div class="map">
+				<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2797.9993018837267!2d-122.78500868444226!3d45.46981797910092!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x54950c6a7fbd28c3%3A0x29b74038576c641e!2sDenney+Road+Rowhomes!5e0!3m2!1sen!2sus!4v1510371704466" allowfullscreen> </iframe>
+			</div><center>
+						 <font style="color:#03a9f4;font-size:30px;font-family:roboto;"><b><u>E-Mail</b></u></font><br>
+					For any questions, please contact us via email at <a href="mailto:carollc@comcast.net">carollc@comcast.net</a>.
+					</p>
+					<font style="color:#03a9f4;font-size:30px;font-family:roboto;"><b><u>Address</b></u></font>
+					<h4>Denney Road Rowhomes HOA</h4>
+					<p>10337 SW Denney Rd.<br>
+						<span>Beaverton,</span>
+						 OR 97008 </p>
+						 
+						 <font style="color:#03a9f4;font-size:30px;font-family:roboto;"><b><u>Phone</b></u></font><br>
+					In case of an emergency or other extraneous circumstance, you can reach us by calling <a href="tel:+15037035128">503-703-5128.</a>
+					<br><br><br>
+					</p>
+						 
+				<div class="clearfix"> </div>
 		</div>
-		</div>
-	<!-- //main-textgrids -->
+		<!-- //container -->
+	</div>
+	<!-- //contact -->
 	<!-- footer -->
 	<footer>
 		<div class="container">
@@ -267,14 +236,5 @@ if(isset($_GET["Message"])) {
 			});
 	</script>
 	<!-- //here ends scrolling icon -->
-	<script src="js/jarallax.js"></script>
-	<script type="text/javascript">
-				/* init Jarallax */
-				$('.jarallax').jarallax({
-					speed: 0.5,
-					imgWidth: 1366,
-					imgHeight: 768
-				})
-			</script>
 </body>	
 </html>

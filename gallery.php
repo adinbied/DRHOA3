@@ -1,45 +1,17 @@
 <?php 
- // Get Needed DB info & redirect if already logged in
-	require_once("functions.php");
-	require_once("db_const.php");
-	session_start();
-	if (logged_in() == true) {
-		redirect_to("home.php");
-	}
-//set Variables
-if (isset($_POST['submit'])) {
-	$pass = $_POST['password'];
-	$email = $_POST['email'];
- 
-// Remember Me Cookies
-if (isset($_POST['remember'])) {	
-		session_set_cookie_params('604800'); //one week (value in seconds)
-		session_regenerate_id(true);
-	} 
-//Get user info from database and authenticate (PDO Protected)
-$user = DB::run("SELECT * FROM users WHERE email = ?", [$email])->fetch();
-if ($user && password_verify($pass, $user['pwd'])) {
-    $_SESSION['uid'] = $user['uid'];
-    $_SESSION['email'] = $user['email'];
-    $_SESSION['loggedIn'] = 'yes';
-
-    header('Location: home.php');
-    exit;
-} else {
-//If user&pass is incorrect, refresh with URL param AuthError to be handled later
-   $Message = urlencode("AuthError");
-		redirect_to("login.php?Message=".$Message);
-}	
-	}
-?><!DOCTYPE html>
+require_once("functions.php");
+require_once("db_const.php");
+session_start();
+?>
 <!--Design Based on W3layouts
 Adapted by Adin Biederman, 2017
 License: Creative Commons Attribution 3.0 Unported
 License URL: http://creativecommons.org/licenses/by/3.0/
 -->
+<!DOCTYPE html>
 <html lang="en">
 <head>
-<title>Member Login</title>
+<title>Gallery</title>
 <link rel="icon" type="image/ico" href="favicon.ico">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta charset="utf-8">
@@ -59,6 +31,9 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 <link href="//fonts.googleapis.com/css?family=Pacifico" rel="stylesheet">
 <link href="//fonts.googleapis.com/css?family=Roboto:100,100i,300,300i,400,400i,500,500i,700,700i,900,900i" rel="stylesheet">
 <!-- //font -->
+<!-- light-box -->
+<link rel="stylesheet" href="css/lightbox.css">
+<!-- //light-box -->
 <script src="js/jquery-1.11.1.min.js"></script>
 <script src="js/bootstrap.js"></script>
 <script type="text/javascript">
@@ -103,7 +78,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 							<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 								<ul class="nav navbar-nav">
 									<li><a href="index.php">Home</a></li>
-									<li><a href="gallery.php">Gallery</a></li>
+									<li><a class="active" href="gallery.php">Gallery</a></li>
 									<li><a href="calendar.php">Calendar</a></li>
 									<li class="dropdown">
 										<a href="codes.html" class="dropdown-toggle" data-hover="Pages" data-toggle="dropdown">Member Pages <b class="caret"></b></a>
@@ -127,45 +102,95 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 				</div>
 				<!-- agileits-top-heading -->
 				<div class="agileits-top-heading">
-					<h2>Member Login</h2>
+					<h2>Gallery</h2>
 				</div>
 				<!-- //agileits-top-heading -->
-				<center>
-				<?
-//Check URL param for string, and present corresponding banner in response
-if(isset($_GET["Message"])) {
-  if($_GET["Message"] == 'RegConfirm') {
-    echo "<div class=\"alert alert-success\" role=\"alert\"><strong>Registration Successful!</strong> You can now sign in using your inputted credentials. </div>";
-  } else if ($_GET["Message"] == 'AuthError') {
-    echo "<div class=\"alert alert-danger\" role=\"alert\"><strong>Incorrect email/password combo!</strong> For account help, please email carollc@comcast.net</div>"; 
-  } 
-}
-?> </center>
 			</div>
 		</div>
 	</div>
 	<!-- //banner -->
-	<!-- about -->
-	<!-- main-textgrids -->
-	<div class="main-textgrids">
+	<!--gallery-->
+	<div class="gallery">
 		<div class="container">
-			</div> <center>
-			<!-- The HTML login form -->
-	<form action="<?=$_SERVER['PHP_SELF']?>" method="post">
-		<h8 style="padding-top: 20px; padding-right: 15px; padding-bottom: 20px; padding-left: 15px">Email: </h8><input type="text" name="email" /><br />
-		Password: <input type="password" name="password" /><br />
-		Remember me: <input type="checkbox" name="remember" /><br />
- 
-		<input type="submit" name="submit" value="Login" />
-		
-	</form>
-	<br>
-	<a href="register.php">Register</a>	<br> <br><font color="red">
-
-</center> </font>
-		</div>
-		</div>
-	<!-- //main-textgrids -->
+			<div class="agileinfo-gallery">
+				<div class="col-md-3 w3-agileits-gallery-grids">
+					<a class="w3 wow zoomIn animated" data-wow-delay=".5s" href="images/housephoto1.jpg" data-lightbox="example-set" data-title="The exterior design of the Denney Road Rowhomes creates a welcoming atmosphere for the community.">
+						<img src="images/housephoto1.jpg" class="img-responsive zoom-img" alt=""/>
+						<div class="agile-b-wrapper">
+							<i class="fa fa-search-plus" aria-hidden="true"></i>
+						</div>
+					</a>
+				</div>
+				<div class="col-md-3 w3-agileits-gallery-grids">
+					<a class="wow zoomIn animated" data-wow-delay=".7s" href="images/leaf.jpg" data-lightbox="example-set" data-title="During the fall months, the Denney Road Rowhomes become beautiful with leaves.">
+						<img src="images/leaf.jpg" class="img-responsive zoom-img" alt=""/>
+						<div class="agile-b-wrapper">
+							<i class="fa fa-search-plus" aria-hidden="true"></i>
+						</div>
+					</a>
+				</div>
+				<div class="col-md-6 w3-agileits-gallery-grids gallery-two wthree">
+					<a class="wow zoomIn animated" data-wow-delay=".9s" href="images/fireplace.jpg" data-lightbox="example-set" data-title="The fireplaces at the Denney Road Rowhomes provide both beauty and heat. ">
+						<img src="images/fireplace.jpg" class="img-responsive zoom-img" alt=""/>
+						<div class="agile-b-wrapper">
+							<i class="fa fa-search-plus" aria-hidden="true"></i>
+						</div>
+					</a>
+				</div>
+				<div class="col-md-3 w3-agileits-gallery-grids agileits-gallery-grids">
+					<a class="wow zoomIn animated" data-wow-delay=".5s" href="images/tree.jpg" data-lightbox="example-set" data-title="Lorem Ipsum is simply dummy the when an unknown galley of type and scrambled it to make a type specimen.">
+						<img src="images/tree.jpg" class="img-responsive zoom-img" alt=""/>
+						<div class="agile-b-wrapper">
+							<i class="fa fa-search-plus" aria-hidden="true"></i>
+						</div>
+					</a>
+				</div>
+				<div class="col-md-3 w3-agileits-gallery-grids agileits-gallery-grids">
+					<a class="wow zoomIn animated" data-wow-delay=".7s" href="images/stairs.jpg" data-lightbox="example-set" data-title="Lorem Ipsum is simply dummy the when an unknown galley of type and scrambled it to make a type specimen.">
+						<img src="images/stairs.jpg" class="img-responsive zoom-img" alt=""/>
+						<div class="agile-b-wrapper">
+							<i class="fa fa-search-plus" aria-hidden="true"></i>
+						</div>
+					</a>
+				</div>
+				<div class="col-md-6 w3-agileits-gallery-grids agileits-gallery-grids gallery-two">
+					<a class="wow zoomIn animated" data-wow-delay=".9s" href="images/lights.jpg" data-lightbox="example-set" data-title="Lorem Ipsum is simply dummy the when an unknown galley of type and scrambled it to make a type specimen book It has survived not only five centuries, but also essentially unchanged. ">
+						<img src="images/lights.jpg" class="img-responsive zoom-img" alt=""/>
+						<div class="agile-b-wrapper">
+							<i class="fa fa-search-plus" aria-hidden="true"></i>
+						</div>
+					</a>
+				</div>	
+				<div class="col-md-6 w3-agileits-gallery-grids gallery-two w3agile-two">
+					<a class="wow zoomIn animated" data-wow-delay=".5s" href="images/g7.jpg" data-lightbox="example-set" data-title="Lorem Ipsum is simply dummy the when an unknown galley of type and scrambled it to make a type specimen book It has survived not only five centuries, remaining essentially unchanged. ">
+						<img src="images/g7.jpg" class="img-responsive zoom-img" alt=""/>
+						<div class="agile-b-wrapper">
+							<i class="fa fa-search-plus" aria-hidden="true"></i>
+						</div>
+					</a>
+				</div>	
+				<div class="col-md-3 w3-agileits-gallery-grids">
+					<a class="wow zoomIn animated" data-wow-delay=".7s" href="images/g4.jpg" data-lightbox="example-set" data-title="Lorem Ipsum is simply dummy the when an unknown galley of type and scrambled it to make a type specimen.">
+						<img src="images/g4.jpg" class="img-responsive zoom-img" alt=""/>
+						<div class="agile-b-wrapper">
+							<i class="fa fa-search-plus" aria-hidden="true"></i>
+						</div>
+					</a>
+				</div>
+				<div class="col-md-3 w3-agileits-gallery-grids">
+					<a class="wow zoomIn animated" data-wow-delay=".9s" href="images/g9.jpg" data-lightbox="example-set" data-title="Lorem Ipsum is simply dummy the when an unknown galley of type and scrambled it to make a type specimen.">
+						<img src="images/g9.jpg" class="img-responsive zoom-img" alt=""/>
+						<div class="agile-b-wrapper">
+							<i class="fa fa-search-plus" aria-hidden="true"></i>
+						</div>
+					</a>
+				</div>	
+				<div class="clearfix"> </div>
+				<script src="js/lightbox-plus-jquery.min.js"> </script>
+			</div>	
+		</div>	
+	</div>	
+	<!--//gallery-->
 	<!-- footer -->
 	<footer>
 		<div class="container">
@@ -267,14 +292,5 @@ if(isset($_GET["Message"])) {
 			});
 	</script>
 	<!-- //here ends scrolling icon -->
-	<script src="js/jarallax.js"></script>
-	<script type="text/javascript">
-				/* init Jarallax */
-				$('.jarallax').jarallax({
-					speed: 0.5,
-					imgWidth: 1366,
-					imgHeight: 768
-				})
-			</script>
 </body>	
 </html>
