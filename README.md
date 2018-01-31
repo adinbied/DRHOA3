@@ -10,3 +10,4 @@ New Source for Website
 6. Get newsletter working & email input field working
 7. Remove/Add/Edit Documents per request to modernize
 8. Instructions for setting up
+9. SEO Optimization/Registration
