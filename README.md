@@ -9,3 +9,4 @@ New Source for Website
 5. Replace comcast with dedicated email throughout site
 6. Get newsletter working & email input field working
 7. Remove/Add/Edit Documents per request to modernize
+8. Instructions for setting up
