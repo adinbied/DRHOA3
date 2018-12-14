@@ -1,7 +1,7 @@
 <?php
-define('DB_HOST', 'localhost');
-define('DB_NAME', 'drhoa');
-define('DB_USER', 'root');
+define('DB_HOST', '');
+define('DB_NAME', '');
+define('DB_USER', '');
 define('DB_PASS', '');
 define('DB_CHAR', 'utf8');
 
@@ -41,8 +41,8 @@ class DB
 }
 //
 /* Connect to a MySQL database using driver invocation */
-$dsn = 'mysql:dbname=drhoa;host=127.0.0.1';
-$user = 'root';
+$dsn = '';
+$user = '';
 $password = '';
 
 try {
